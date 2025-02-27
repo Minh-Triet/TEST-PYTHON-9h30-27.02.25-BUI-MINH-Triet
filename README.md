@@ -28,7 +28,7 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ```
 4.
 - Set up the PostgreSQL database:
-- Install PostgreSQL (if not already installed)
+- Install PostgreSQL (if not already installed) or ìf using docker run file : postgresql_docker.bat
 - Create a new database named sales_db
 - Update the DATABASE_URL in the connection string (e.g., postgresql://username:password@localhost/sales_db)
 

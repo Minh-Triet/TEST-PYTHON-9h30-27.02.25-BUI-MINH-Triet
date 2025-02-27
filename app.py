@@ -67,6 +67,8 @@ def get_sales_data():
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
     region = request.args.get('region')
+    page = request.args.get('page', default=1, type=int)  # Thêm tham số page
+    per_page = request.args.get('per_page', default=10, type=int)  # Thêm tham số per_page
 
     if not all([start_date, end_date, region]):
         return jsonify({'error': 'Missing query parameters'}), 400
@@ -74,20 +76,37 @@ def get_sales_data():
     try:
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
-        filtered_data = Sale.query.filter(
+        filtered_query = Sale.query.filter(
             Sale.date >= start_date,
             Sale.date <= end_date,
             Sale.region == region
-        ).all()
+        )
 
-        total_sales = sum(sale.sales for sale in filtered_data)
-        average_sales = total_sales / len(filtered_data) if filtered_data else 0
-        transaction_count = len(filtered_data)
+        # Phân trang
+        paginated_data = filtered_query.paginate(page=page, per_page=per_page)
+        items = paginated_data.items
+
+        total_sales = sum(sale.sales for sale in items)
+        average_sales = total_sales / len(items) if items else 0
+        transaction_count = len(items)
+
         # Returns total sales, average sales, and count of transactions for the given date range and region.
         return jsonify({
             'total_sales': total_sales,
             'average_sales': average_sales,
-            'transaction_count': transaction_count
+            'transaction_count': transaction_count,
+            'page': page,
+            'per_page': per_page,
+            'total_pages': paginated_data.pages,
+            'total_items': paginated_data.total,
+            'items': [{
+                'date': sale.date.isoformat(),
+                'region': sale.region,
+                'product': sale.product,
+                'quantity': sale.quantity,
+                'price': sale.price,
+                'sales': sale.sales
+            } for sale in items]
         }), 200
 
     except Exception as e:
@@ -95,4 +114,4 @@ def get_sales_data():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8000)

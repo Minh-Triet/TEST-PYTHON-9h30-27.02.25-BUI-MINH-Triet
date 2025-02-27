@@ -1,4 +1,5 @@
 @echo off
+docker pull postgres
 docker run -d ^
   --name my-postgres ^
   -e POSTGRES_USER=postgres ^
