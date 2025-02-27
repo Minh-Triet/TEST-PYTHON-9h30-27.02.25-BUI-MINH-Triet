@@ -46,3 +46,8 @@ http://127.0.0.1:5000/sales/?start_date=2024-01-01&end_date=2024-12-31&region=US
 ```
 ![img.png](img.png)
 ![img_1.png](img_1.png)
+
+# Unit tests using pytest run CMD:
+```bash
+pytest
+```
