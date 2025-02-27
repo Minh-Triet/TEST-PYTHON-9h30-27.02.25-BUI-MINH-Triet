@@ -39,5 +39,5 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 ```bash 
 curl -X POST -F "file=@data.csv" http://127.0.0.1:8000/upload/ 
 
-curl http://127.0.0.1:8000/sales/?start_date=2024-01-01&end_date=2024-12-31&region=USA&page=2&per_page=10
+curl http://127.0.0.1:8000/sales/?start_date=2024-01-01&end_date=2024-12-31&region=USA
 ```
