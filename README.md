@@ -38,6 +38,7 @@ source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
 - Or use :
 ```bash 
 curl -X POST -F "file=@data.csv" http://127.0.0.1:8000/upload/ 
-
 curl http://127.0.0.1:8000/sales/?start_date=2024-01-01&end_date=2024-12-31&region=USA
 ```
+![img.png](img.png)
+![img_1.png](img_1.png)
